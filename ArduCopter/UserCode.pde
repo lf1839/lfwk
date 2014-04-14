@@ -1,11 +1,11 @@
 /// -*- tab-width: 4; Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*-
 #include <GPS.h>
 
-// Pin A8, add an offset of 54 to use at Dig out rather than analogue in
-#define AP_CAMERA_STROBE_PIN (54 + 7)
+// Pin A2, add an offset of 54 to use at Dig out rather than analogue in
+#define AP_CAMERA_STROBE_PIN (54 + 2)
 
 // Strobe period at 50hz; i.e 5 = 10Hz
-#define STROBE_PERIOD   50
+#define STROBE_PERIOD   2
 
 #ifdef USERHOOK_INIT
 
