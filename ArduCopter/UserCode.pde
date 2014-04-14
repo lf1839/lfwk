@@ -1,13 +1,19 @@
 /// -*- tab-width: 4; Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*-
 #include <GPS.h>
+
+// Pin A8, add an offset of 54 to use at Dig out rather than analogue in
+#define AP_CAMERA_STROBE_PIN (54 + 7)
+
+// Strobe period at 50hz; i.e 5 = 10Hz
+#define STROBE_PERIOD   50
+
 #ifdef USERHOOK_INIT
 
 void userhook_init()
 {
-
-
-   hal.uartC->begin(9600, 128, 128);
-
+    hal.uartC->begin(9600, 128, 128);
+    hal.gpio->pinMode(AP_CAMERA_STROBE_PIN, 1);
+    strobe_cnt = 0;
 }
 #endif
 
@@ -20,16 +26,13 @@ void userhook_FastLoop()
 
 
       char mO2;
- while (hal.uartC->available() > 0) {
+    while (hal.uartC->available() > 0) {
      mO2 =  hal.uartC->read();
      //hal.uartC->print(mO2);
      UWB_rectemp[count]=mO2;
      count++;
      if(count>24)
      {
-            //hal.uartC->print(mO2);
-            //for(unsigned)
-           // hal.uartC->print(0x55);
                   O2       = (unsigned char)UWB_rectemp[2];
                   //O2       =0x55;
                   CO2      = (unsigned char)UWB_rectemp[3];
@@ -58,31 +61,21 @@ void userhook_FastLoop()
     }
 
  }
-      //hal.uartC->printf("x:%d.",55);
-      // hal.uartC->printf("%x",55);
-    /** while(hal.uartC->available()>0)
-    {
-           hal.uartC->printf("%x",hal.uartC->available());
-           temp[count]=hal.uartC->read();
-          // hal.uartC->print(0x55);
-           count++;
-           if(count>24)
-           {
-            //for(unsigned)
-           // hal.uartC->print(0x55);
-            count=0;
-         }
-
-    }**/
 }
 #endif
 
 #ifdef USERHOOK_50HZLOOP
 void userhook_50Hz()
 {
+    strobe_cnt++;
+    if (strobe_cnt >= STROBE_PERIOD)
+        strobe_cnt = 0;
 
-
-    // put your 50Hz code here
+    if (strobe_cnt == 0)
+        hal.gpio->write(AP_CAMERA_STROBE_PIN, 1);
+    else
+    //if (strobe_cnt == 1)
+        hal.gpio->write(AP_CAMERA_STROBE_PIN, 0);
 }
 #endif
 
