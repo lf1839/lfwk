@@ -5,7 +5,10 @@
 #define AP_CAMERA_STROBE_PIN (54 + 5)
 
 // Strobe period at 50hz; i.e 5 = 10Hz
-#define STROBE_PERIOD   25
+#define STROBE_PERIOD   100
+
+// Number of 50Hz cycles to wait before starting
+#define STARTUP_PERIOD  (50 * 120)
 
 #ifdef USERHOOK_INIT
 
@@ -14,6 +17,7 @@ void userhook_init()
     hal.uartC->begin(9600, 128, 128);
     hal.gpio->pinMode(AP_CAMERA_STROBE_PIN, 1);
     strobe_cnt = 0;
+    startup_cnt = 0;
 }
 #endif
 
@@ -67,6 +71,12 @@ void userhook_FastLoop()
 #ifdef USERHOOK_50HZLOOP
 void userhook_50Hz()
 {
+
+    if (startup_cnt < STARTUP_PERIOD) {
+        startup_cnt++;
+        return;
+    }
+
     strobe_cnt++;
     if (strobe_cnt >= STROBE_PERIOD)
         strobe_cnt = 0;

@@ -7,6 +7,7 @@
 #ifdef USERHOOK_VARIABLES
 
 int strobe_cnt;
+int startup_cnt;
 
 #if WII_CAMERA == 1
 WiiCamera           ircam;
