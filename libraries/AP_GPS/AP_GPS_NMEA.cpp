@@ -88,6 +88,8 @@ const prog_char AP_GPS_NMEA::_ublox_init_string[] PROGMEM =
 
 const prog_char AP_GPS_NMEA::_mb100_init_string[] PROGMEM =
 	//"$PASHS,NME,GSV,B,OFF\r\n";
+	"$PASHS,NME,VTG,A,ON,0.2\r\n"
+	//"$PASHS,NME,RMC,A,ON,0.2\r\n"
 	"$PASHS,NME,GGA,A,ON,0.2\r\n"
 	"$PASHS,NME,GST,A,OFF\r\n"
 	"$PASHS,NME,GSA,A,OFF\r\n"
