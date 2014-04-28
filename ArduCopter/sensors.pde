@@ -44,11 +44,16 @@ static int16_t read_sonar(void)
 
     int16_t temp_alt = sonar->read();
 
+  // We want to use the sonar for logging, not control; never let it
+  // be shown at healthy
+  #if SONAR_LOG_ONLY == 0
     if (temp_alt >= sonar->min_distance && temp_alt <= sonar->max_distance * SONAR_RELIABLE_DISTANCE_PCT) {
         if ( sonar_alt_health < SONAR_ALT_HEALTH_MAX ) {
             sonar_alt_health++;
         }
-    }else{
+    }else
+  #endif
+    {
         sonar_alt_health = 0;
     }
 

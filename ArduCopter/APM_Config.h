@@ -47,6 +47,8 @@
 //#define HIL_MODE              HIL_MODE_SENSORS    // build for hardware-in-the-loop simulation
 #define GPS_PROTOCOL GPS_PROTOCOL_NMEA
 
+#define SONAR_LOG_ONLY 1
+
 // User Hooks : For User Developed code that you wish to run
 // Put your variable definitions into the UserVariables.h file (or another file name and then change the #define below).
 #define USERHOOK_VARIABLES "UserVariables.h"
