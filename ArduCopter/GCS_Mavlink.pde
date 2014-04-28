@@ -442,10 +442,7 @@ static void NOINLINE send_vfr_hud(mavlink_channel_t chan)
         (ahrs.yaw_sensor / 100) % 360,
         g.rc_3.servo_out/10,
         current_loc.alt / 100.0f,
-        // HACK: BN. Insert sonar alt here so we don't need to teach
-        // MP about RANGEFINDER class messages
-        sonar_alt / 100.0f);
-        //climb_rate / 100.0f);
+        climb_rate / 100.0f);
 }
 
 static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
