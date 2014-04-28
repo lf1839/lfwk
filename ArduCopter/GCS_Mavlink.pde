@@ -442,21 +442,17 @@ static void NOINLINE send_vfr_hud(mavlink_channel_t chan)
         (ahrs.yaw_sensor / 100) % 360,
         g.rc_3.servo_out/10,
         current_loc.alt / 100.0f,
-        climb_rate / 100.0f);
+        // HACK: BN. Insert sonar alt here so we don't need to teach
+        // MP about RANGEFINDER class messages
+        sonar_alt / 100.0f);
+        //climb_rate / 100.0f);
 }
 
 static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
 {
-    Vector3f accel = ins.get_accel();
+/*    Vector3f accel = ins.get_accel();
     Vector3f gyro = ins.get_gyro();
 
-    accel.x=O2;
-    accel.y=CO2;
-    accel.z =CO.N;
-    gyro.x=NO.N;
-    gyro.y=NO2.N;
-    gyro.z=SO2.N;
-    compass.mag_x=H2S.N;
     mavlink_msg_raw_imu_send(
         chan,
         micros(),
@@ -468,7 +464,21 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         gyro.z,
         compass.mag_x,
         compass.mag_y,
-        compass.mag_z);
+        compass.mag_z);*/
+
+    // HACK: BN. Before my time, Liang/Qingchen decided to overwrite
+    // IMU message with gas sensor readings. Ho-hum.
+    mavlink_msg_raw_imu_send(
+        chan,
+        micros(),
+        O2,
+        CO2,
+        CO.N,
+        NO.N,
+        NO2.N,
+        SO2.N,
+        SO2.N,
+        0, 0);
 }
 
 static void NOINLINE send_raw_imu2(mavlink_channel_t chan)
