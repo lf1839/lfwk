@@ -242,6 +242,11 @@ static void NOINLINE send_location(mavlink_channel_t chan)
         g_gps->velocity_east()  * 100,  // Y speed cm/s (+ve East)
         g_gps->velocity_down()  * -100, // Z speed cm/s (+ve up)
         ahrs.yaw_sensor);               // compass heading in 1/100 degree
+
+    mavlink_msg_rangefinder_send(
+        chan,
+        sonar_alt / 100.,
+        sonar_alt / 100.);
 }
 
 static void NOINLINE send_nav_controller_output(mavlink_channel_t chan)
