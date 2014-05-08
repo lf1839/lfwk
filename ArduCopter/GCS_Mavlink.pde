@@ -447,7 +447,7 @@ static void NOINLINE send_vfr_hud(mavlink_channel_t chan)
 
 static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
 {
-/*    Vector3f accel = ins.get_accel();
+    Vector3f accel = ins.get_accel();
     Vector3f gyro = ins.get_gyro();
 
     mavlink_msg_raw_imu_send(
@@ -459,13 +459,13 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         gyro.x ,
         gyro.y,
         gyro.z,
-        compass.mag_x,
-        compass.mag_y,
-        compass.mag_z);*/
+        compass.get_field()[0],
+        compass.get_field()[1],
+        compass.get_field()[2]);
 
     // HACK: BN. Before my time, Liang/Qingchen decided to overwrite
     // IMU message with gas sensor readings. Ho-hum.
-    mavlink_msg_raw_imu_send(
+   /* mavlink_msg_raw_imu_send(
         chan,
         micros(),
         O2,
@@ -475,7 +475,7 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         NO2.N,
         SO2.N,
         SO2.N,
-        0, 0);
+        0, 0);*/
 }
 
 static void NOINLINE send_raw_imu2(mavlink_channel_t chan)

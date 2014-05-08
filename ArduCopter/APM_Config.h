@@ -23,8 +23,8 @@
  *  SINGLE_FRAME
  */
 
-#define FRAME_CONFIG OCTA_FRAME
-//#define FRAME_CONFIG QUAD_FRAME
+//#define FRAME_CONFIG OCTA_FRAME
+#define FRAME_CONFIG QUAD_FRAME
 
 //#define LOGGING_ENABLED       DISABLED            // disable dataflash logging to save 11K of flash space
 //#define GPS_PROTOCOL          GPS_PROTOCOL_UBLOX  // hard code GPS to Ublox to save 8k of flash
@@ -54,7 +54,7 @@
 #define USERHOOK_VARIABLES "UserVariables.h"
 // Put your custom code into the UserCode.pde with function names matching those listed below and ensure the appropriate #define below is uncommented below
 #define USERHOOK_INIT userhook_init();                      // for code to be run once at startup
-#define USERHOOK_FASTLOOP userhook_FastLoop();            // for code to be run at 100hz
+//#define USERHOOK_FASTLOOP userhook_FastLoop();            // for code to be run at 100hz
 #define USERHOOK_50HZLOOP userhook_50Hz();                  // for code to be run at 50hz
 //#define USERHOOK_MEDIUMLOOP userhook_MediumLoop();        // for code to be run at 10hz
 //#define USERHOOK_SLOWLOOP userhook_SlowLoop();            // for code to be run at 3.3hz

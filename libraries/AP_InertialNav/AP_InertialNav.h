@@ -92,7 +92,6 @@ public:
      */
     void        check_gps();
 
-<<<<<<< HEAD
     /**
      * correct_with_gps - calculates horizontal position error using gps
      *
@@ -100,11 +99,8 @@ public:
      * @param lon : longitude in 100 nano degrees (i.e. degree value multiplied by 10,000,000)
      * @param lat : latitude  in 100 nano degrees (i.e. degree value multiplied by 10,000,000)
      */
-    void        correct_with_gps(uint32_t now, int32_t lon, int32_t lat);
-=======
     // correct_with_gps - modifies accelerometer offsets using gps.
     float        correct_with_gps(uint32_t now, int32_t lon, int32_t lat);
->>>>>>> SCSC: Use CH7 to get height from GPS
 
     /**
      * get_position - returns the current position relative to the home location in cm.
@@ -127,7 +123,6 @@ public:
      */
     int32_t     get_longitude() const;
 
-<<<<<<< HEAD
     /**
      * set_home_position - sets home position
      *
@@ -136,11 +131,8 @@ public:
      * @param lon : longitude in 100 nano degrees (i.e. degree value multiplied by 10,000,000)
      * @param lat : latitude  in 100 nano degrees (i.e. degree value multiplied by 10,000,000)
      */
-    void        set_home_position(int32_t lon, int32_t lat);
-=======
     // set_home_position - all internal calculations are recorded as the distances from this point
     void        set_home_position(int32_t lon, int32_t lat, int32_t alt);
->>>>>>> SCSC: Use CH7 to get height from GPS
 
     /**
      * get_latitude_diff - returns the current latitude difference from the home location.
@@ -262,9 +254,6 @@ public:
     // public variables
     Vector3f                accel_correction_ef;        // earth frame accelerometer corrections. here for logging purposes only
 
-    // set_position_xy - sets inertial navigation position to given xy coordinates from home
-    void            set_position_xy(float pos_x, float pos_y);
-
     void            set_fake_baro_with_gps(bool fake) { _fake_baro_with_gps = fake; }
 
 protected:
@@ -333,14 +322,8 @@ protected:
     GPS_Glitch&             _glitch_detector;           // GPS Glitch detector
     uint8_t                 _error_count;               // number of missed GPS updates
 
-<<<<<<< HEAD
-=======
-    // GPS Glitch detector
-    GPS_Glitch&             _glitch_detector;
-
     bool                    _fake_baro_with_gps;
     int32_t                 _home_alt;
->>>>>>> SCSC: Use CH7 to get height from GPS
 };
 
 #endif // __AP_INERTIALNAV_H__
