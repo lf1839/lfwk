@@ -133,7 +133,11 @@ void AP_InertialNav::check_gps()
     if( _gps != NULL && _gps->last_fix_time != _gps_last_time ) {
 
         // call position correction method
-        correct_with_gps(now, _gps->longitude, _gps->latitude);
+        float dt = correct_with_gps(now, _gps->longitude, _gps->latitude);
+
+        if (_fake_baro_with_gps) {
+            correct_with_baro(_gps->altitude_cm - _home_alt, dt);
+        }
 
         // record gps time and system time of this update
         _gps_last_time = _gps->last_fix_time;
@@ -151,7 +155,7 @@ void AP_InertialNav::check_gps()
 }
 
 // correct_with_gps - modifies accelerometer offsets using gps
-void AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
+float AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
 {
     float dt,x,y;
     float hist_position_base_x, hist_position_base_y;
@@ -164,7 +168,7 @@ void AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
 
     // discard samples where dt is too large
     if( dt > 1.0f || dt == 0 || !_xy_enabled) {
-        return;
+        return 0;
     }
 
     // calculate distance from base location
@@ -203,6 +207,8 @@ void AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
 
     // update our internal record of glitching flag so that we can notice a change
     _flags.gps_glitching = _glitch_detector.glitching();
+
+    return dt;
 }
 
 // get accel based latitude
@@ -228,8 +234,9 @@ int32_t AP_InertialNav::get_longitude() const
 }
 
 // set_home_position - all internal calculations are recorded as the distances from this point
-void AP_InertialNav::set_home_position(int32_t lon, int32_t lat)
+void AP_InertialNav::set_home_position(int32_t lon, int32_t lat, int32_t alt)
 {
+    _home_alt = alt;
     // set base location
     _base_lon = lon;
     _base_lat = lat;
@@ -318,7 +325,11 @@ void AP_InertialNav::check_baro()
     if( baro_update_time != _baro_last_update ) {
         const float dt = (float)(baro_update_time - _baro_last_update) * 0.001f; // in seconds
         // call correction method
-        correct_with_baro(_baro->get_altitude()*100, dt);
+
+        if (!_fake_baro_with_gps) {
+            correct_with_baro(_baro->get_altitude()*100, dt);
+        }
+
         _baro_last_update = baro_update_time;
     }
 }
@@ -330,7 +341,7 @@ void AP_InertialNav::correct_with_baro(float baro_alt, float dt)
     static uint8_t first_reads = 0;
 
     // discard samples where dt is too large
-    if( dt > 0.5f ) {
+    if( dt > 0.5f || dt == 0.0f ) {
         return;
     }
 

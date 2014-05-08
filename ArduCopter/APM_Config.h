@@ -5,7 +5,6 @@
 // If you used to define your CONFIG_APM_HARDWARE setting here, it is no longer
 // valid! You should switch to using a HAL_BOARD flag in your local config.mk.
 
-#define FRAME_CONFIG OCTA_FRAME
 //#define HIL_MODE              HIL_MODE_SENSORS    // build for hardware-in-the-loop simulation
 //#define LOGGING_ENABLED       DISABLED            // disable logging to save code space
 //#define DMP_ENABLED           ENABLED             // use MPU6000's DMP instead of DCM for attitude estimation
@@ -24,8 +23,9 @@
  *  SINGLE_FRAME
  */
 
-// uncomment the lines below to save on flash space if compiling for the APM using Arduino IDE.  Top items save the most flash space
-//#define CLI_ENABLED           DISABLED            // disable the CLI (command-line-interface) to save 21K of flash space
+#define FRAME_CONFIG OCTA_FRAME
+//#define FRAME_CONFIG QUAD_FRAME
+
 //#define LOGGING_ENABLED       DISABLED            // disable dataflash logging to save 11K of flash space
 //#define GPS_PROTOCOL          GPS_PROTOCOL_UBLOX  // hard code GPS to Ublox to save 8k of flash
 //#define GPS_PROTOCOL          GPS_PROTOCOL_MTK19  // hard cdoe GPS to Mediatek to save 10k of flash
