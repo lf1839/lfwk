@@ -276,7 +276,11 @@ bool AP_GPS_NMEA::_term_complete()
                     longitude           = _new_longitude;
                     num_sats            = _new_satellite_count;
                     hdop                        = _new_hdop;
-                    fix                 = GPS::FIX_3D;          // To-Do: add support for proper reporting of 2D and 3D fix
+
+                    if(_new_fix > 2)
+                        fix = GPS::FIX_RTK;
+                    else
+                        fix = GPS::FIX_3D;
                     break;
                 case _GPS_SENTENCE_GPVTG:
                     ground_speed_cm     = _new_speed;
@@ -329,7 +333,8 @@ bool AP_GPS_NMEA::_term_complete()
         case _GPS_SENTENCE_GPGGA + 6: // Fix data (GGA)
             //_gps_data_good = _term[0] > '0';
             // BN: Hack: Only accept DGPS or RTK fixes
-            _gps_data_good = _term[0] > '3';
+            _gps_data_good = _term[0] > '0';
+            _new_fix = _term[0] - '0';
             break;
         case _GPS_SENTENCE_GPVTG + 9: // validity (VTG) (we may not see this field)
             _gps_data_good = _term[0] != 'N';

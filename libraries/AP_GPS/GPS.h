@@ -45,6 +45,7 @@ public:
         FIX_NONE = 0,           ///< No fix
         FIX_2D = 2,             ///< 2d fix
         FIX_3D = 3,             ///< 3d fix
+        FIX_RTK = 5,
     };
 
     // GPS navigation engine settings. Not all GPS receivers support
