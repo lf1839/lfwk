@@ -302,9 +302,10 @@ bool AP_GPS_NMEA::_term_complete()
 
     // the first term determines the sentence type
     if (_term_number == 0) {
-        if (!strcmp_P(_term, _gprmc_string)) {
+        // BN: Don't parse RMC for this GPS, it's a little screwy wrt fix types
+        /*if (!strcmp_P(_term, _gprmc_string)) {
             _sentence_type = _GPS_SENTENCE_GPRMC;
-        } else if (!strcmp_P(_term, _gpgga_string)) {
+        } else*/ if (!strcmp_P(_term, _gpgga_string)) {
             _sentence_type = _GPS_SENTENCE_GPGGA;
         } else if (!strcmp_P(_term, _gpvtg_string)) {
             _sentence_type = _GPS_SENTENCE_GPVTG;
@@ -326,7 +327,9 @@ bool AP_GPS_NMEA::_term_complete()
             _gps_data_good = _term[0] == 'A';
             break;
         case _GPS_SENTENCE_GPGGA + 6: // Fix data (GGA)
-            _gps_data_good = _term[0] > '0';
+            //_gps_data_good = _term[0] > '0';
+            // BN: Hack: Only accept DGPS or RTK fixes
+            _gps_data_good = _term[0] > '3';
             break;
         case _GPS_SENTENCE_GPVTG + 9: // validity (VTG) (we may not see this field)
             _gps_data_good = _term[0] != 'N';
