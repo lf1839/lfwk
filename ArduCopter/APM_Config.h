@@ -23,8 +23,8 @@
  *  SINGLE_FRAME
  */
 
-//#define FRAME_CONFIG OCTA_FRAME
-#define FRAME_CONFIG QUAD_FRAME
+#define FRAME_CONFIG OCTA_FRAME
+//#define FRAME_CONFIG QUAD_FRAME
 
 //#define LOGGING_ENABLED       DISABLED            // disable dataflash logging to save 11K of flash space
 //#define GPS_PROTOCOL          GPS_PROTOCOL_UBLOX  // hard code GPS to Ublox to save 8k of flash
