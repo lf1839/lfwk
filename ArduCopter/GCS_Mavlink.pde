@@ -245,7 +245,7 @@ static void NOINLINE send_location(mavlink_channel_t chan)
 
     mavlink_msg_rangefinder_send(
         chan,
-        sonar->distance,
+        sonar->distance * 0.01f,
         0);
 }
 
