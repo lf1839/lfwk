@@ -23,8 +23,11 @@
  *  SINGLE_FRAME
  */
 
+#if CONFIG_HAL_BOARD != HAL_BOARD_AVR_SITL
 #define FRAME_CONFIG OCTA_FRAME
-//#define FRAME_CONFIG QUAD_FRAME
+#else
+#define FRAME_CONFIG QUAD_FRAME
+#endif
 
 //#define LOGGING_ENABLED       DISABLED            // disable dataflash logging to save 11K of flash space
 //#define GPS_PROTOCOL          GPS_PROTOCOL_UBLOX  // hard code GPS to Ublox to save 8k of flash
@@ -45,7 +48,10 @@
 //#define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM   DISABLED    // when set to DISABLED vehicle will disarm after landing (in LAND mode or RTL) even if pilot has not put throttle to zero
 
 //#define HIL_MODE              HIL_MODE_SENSORS    // build for hardware-in-the-loop simulation
+
+#if CONFIG_HAL_BOARD != HAL_BOARD_AVR_SITL
 #define GPS_PROTOCOL GPS_PROTOCOL_NMEA
+#endif
 
 #define SONAR_LOG_ONLY 1
 
