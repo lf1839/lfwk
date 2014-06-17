@@ -324,6 +324,11 @@ protected:
 
     bool                    _fake_baro_with_gps;
     int32_t                 _home_alt;
+
+    AP_Float                _gps_offx;
+    AP_Float                _gps_offy;
+    AP_Float                _gps_offz;
+
 };
 
 #endif // __AP_INERTIALNAV_H__

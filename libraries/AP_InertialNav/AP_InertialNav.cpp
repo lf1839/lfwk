@@ -21,6 +21,10 @@ const AP_Param::GroupInfo AP_InertialNav::var_info[] PROGMEM = {
     // @Increment: 0.1
     AP_GROUPINFO("TC_Z",    2, AP_InertialNav, _time_constant_z, AP_INTERTIALNAV_TC_Z),
 
+    AP_GROUPINFO("GPS_OFFX",3, AP_InertialNav, _gps_offx, 0),
+    AP_GROUPINFO("GPS_OFFY",4, AP_InertialNav, _gps_offy, 0),
+    AP_GROUPINFO("GPS_OFFZ",5, AP_InertialNav, _gps_offz, 0),
+
     AP_GROUPEND
 };
 
@@ -159,6 +163,8 @@ float AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
 {
     float dt,x,y;
     float hist_position_base_x, hist_position_base_y;
+    Vector3f gps_offset(_gps_offx, _gps_offy, _gps_offz);
+    Vector2f offs_bf;
 
     // calculate time since last gps reading
     dt = (float)(now - _gps_last_update) * 0.001f;
@@ -174,6 +180,11 @@ float AP_InertialNav::correct_with_gps(uint32_t now, int32_t lon, int32_t lat)
     // calculate distance from base location
     x = (float)(lat - _base_lat) * LATLON_TO_CM;
     y = (float)(lon - _base_lon) * _lon_to_cm_scaling;
+
+    offs_bf = _ahrs->get_dcm_matrix().mulXY(gps_offset);
+
+    x -= offs_bf.x;
+    y -= offs_bf.y;
 
     // sanity check the gps position.  Relies on the main code calling GPS_Glitch::check_position() immediatley after a GPS update
     if (_glitch_detector.glitching()) {
