@@ -261,13 +261,13 @@ bool AP_GPS_NMEA::_term_complete()
                 case _GPS_SENTENCE_GPRMC:
                     //time                        = _new_time;
                     //date                        = _new_date;
-                    latitude            = _new_latitude;
-                    longitude           = _new_longitude;
-                    ground_speed_cm     = _new_speed;
-                    ground_course_cd    = _new_course;
+                    //latitude            = _new_latitude;
+                    //longitude           = _new_longitude;
+                    //ground_speed_cm     = _new_speed;
+                    //ground_course_cd    = _new_course;
                     _make_gps_time(_new_date, _new_time * 10);
                     _last_gps_time      = hal.scheduler->millis();
-                    fix                 = GPS::FIX_3D;          // To-Do: add support for proper reporting of 2D and 3D fix
+                    //fix                 = GPS::FIX_3D;          // To-Do: add support for proper reporting of 2D and 3D fix
                     break;
                 case _GPS_SENTENCE_GPGGA:
                     altitude_cm         = _new_altitude;
@@ -290,7 +290,7 @@ bool AP_GPS_NMEA::_term_complete()
                 }
             } else {
                 switch (_sentence_type) {
-                case _GPS_SENTENCE_GPRMC:
+                //case _GPS_SENTENCE_GPRMC:
                 case _GPS_SENTENCE_GPGGA:
                     // Only these sentences give us information about
                     // fix status.
@@ -306,10 +306,9 @@ bool AP_GPS_NMEA::_term_complete()
 
     // the first term determines the sentence type
     if (_term_number == 0) {
-        // BN: Don't parse RMC for this GPS, it's a little screwy wrt fix types
-        /*if (!strcmp_P(_term, _gprmc_string)) {
+        if (!strcmp_P(_term, _gprmc_string)) {
             _sentence_type = _GPS_SENTENCE_GPRMC;
-        } else*/ if (!strcmp_P(_term, _gpgga_string)) {
+        } else if (!strcmp_P(_term, _gpgga_string)) {
             _sentence_type = _GPS_SENTENCE_GPGGA;
         } else if (!strcmp_P(_term, _gpvtg_string)) {
             _sentence_type = _GPS_SENTENCE_GPVTG;
