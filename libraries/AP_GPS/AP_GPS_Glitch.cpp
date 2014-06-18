@@ -59,7 +59,7 @@ void GPS_Glitch::check_position()
     bool all_ok;                    // true if the new gps position passes sanity checks
 
     // exit immediately if we don't have gps lock
-    if (_gps == NULL || _gps->status() != GPS::GPS_OK_FIX_3D) {
+    if (_gps == NULL || _gps->status() < GPS::GPS_OK_FIX_3D) {
         _flags.glitching = true;
         return;
     }
