@@ -110,8 +110,8 @@ GPS::update(void)
         }
     }
 
-    // update notify with gps status
-    AP_Notify::flags.gps_status = _status;
+    // update notify with gps status. AP_Notify doesn't understand fixes higher than 3D
+    AP_Notify::flags.gps_status = min(_status, GPS_OK_FIX_3D);
 }
 
 void
