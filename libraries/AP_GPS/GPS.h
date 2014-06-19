@@ -37,7 +37,9 @@ public:
         NO_FIX = 1,             ///< Receiving valid GPS messages but no lock
         GPS_OK_FIX_2D = 2,      ///< Receiving valid messages and 2D lock
         GPS_OK_FIX_3D = 3,      ///< Receiving valid messages and 3D lock
-        GPS_OK_FIX_RTK = 4
+        GPS_OK_FIX_DGPS = 4,
+        GPS_OK_FIX_RTK = 5,
+        GPS_OK_FIX_RTK_FLOAT = 6,
     };
 
     /// Fix status codes
@@ -46,7 +48,9 @@ public:
         FIX_NONE = 0,           ///< No fix
         FIX_2D = 2,             ///< 2d fix
         FIX_3D = 3,             ///< 3d fix
+        FIX_DGPS = 4,
         FIX_RTK = 5,
+        FIX_RTK_FLOAT = 6,
     };
 
     // GPS navigation engine settings. Not all GPS receivers support

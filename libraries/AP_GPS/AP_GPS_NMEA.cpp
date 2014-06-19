@@ -277,11 +277,14 @@ bool AP_GPS_NMEA::_term_complete()
                     num_sats            = _new_satellite_count;
                     hdop                        = _new_hdop;
 
-                    if(_new_fix > 2)
-                        fix = GPS::FIX_RTK;
-                    else
-                        fix = GPS::FIX_3D;
-                    break;
+                    switch(_new_fix) {
+                    case 1: fix = FIX_3D; break;
+                    case 2: fix = FIX_DGPS; break;
+                    case 3: fix = FIX_DGPS; break; // This is actually PPS, DGPS-like accuracy though..
+                    case 4: fix = FIX_RTK; break;
+                    case 5: fix = FIX_RTK_FLOAT; break;
+                    default: fix = FIX_NONE; break; // This will catch things like 'simulation' and 'manual' that we really better not ever really see here.
+                    }
                 case _GPS_SENTENCE_GPVTG:
                     ground_speed_cm     = _new_speed;
                     ground_course_cd    = _new_course;
