@@ -6,7 +6,7 @@
 #include <AP_Param.h>
 #include <AP_Math.h>
 #include <AP_Baro.h>
-
+#include <AP_Param.h>
 extern const AP_HAL::HAL& hal;
 
 
@@ -754,6 +754,27 @@ void DataFlash_Class::Log_Write_IMU(const AP_InertialSensor &ins)
         accel_z : accel2.z
     };
     WriteBlock(&pkt2, sizeof(pkt2));
+}
+
+
+// Write a raw gas data packet
+void DataFlash_Class::Log_Write_GAS(int NO,int NO2,int SO2,int O2,int CO2,int CO)
+{
+    uint32_t tstamp = hal.scheduler->millis();
+
+    struct log_GAS pkt = {
+        LOG_PACKET_HEADER_INIT(LOG_GAS_MSG),
+        timestamp : tstamp,
+        NO  : NO,
+        NO2 : NO2,
+        SO2 : SO2,
+        O2  : O2,
+        CO2 : CO2,
+        CO  : CO
+    };
+
+
+    WriteBlock(&pkt, sizeof(pkt));
 }
 
 // Write a text message to the log

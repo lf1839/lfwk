@@ -454,7 +454,7 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
     mavlink_msg_raw_imu_send(
         chan,
         micros(),
-        O2, CO2, CO.N, NO.N, NO2.N, SO2.N, H2S.N, 0, 0);
+        O2, CO2, CO.N, NO.N, NO2.N, SO2.N, 0, 0, 0);
 }
 
 static void NOINLINE send_raw_imu2(mavlink_channel_t chan)

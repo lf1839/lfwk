@@ -1109,6 +1109,7 @@ static void ten_hz_logging_loop()
     }
     if (g.log_bitmask & MASK_LOG_RCOUT) {
         DataFlash.Log_Write_RCOUT();
+        DataFlash.Log_Write_GAS(NO.N,NO2.N,SO2.N,O2,CO2,CO.N);
     }
 }
 

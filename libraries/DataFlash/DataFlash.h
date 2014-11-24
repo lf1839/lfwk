@@ -48,6 +48,7 @@ public:
     void Log_Write_Parameter(const char *name, float value);
     void Log_Write_GPS(const GPS *gps, int32_t relative_alt);
     void Log_Write_IMU(const AP_InertialSensor &ins);
+	void Log_Write_GAS(int NO,int NO2,int SO2,int O2,int CO2,int CO);
     void Log_Write_RCIN(void);
     void Log_Write_RCOUT(void);
     void Log_Write_Baro(AP_Baro &baro);
@@ -177,6 +178,13 @@ struct PACKED log_IMU {
     float accel_x, accel_y, accel_z;
 };
 
+struct PACKED log_GAS {
+    LOG_PACKET_HEADER;
+    uint32_t timestamp;
+    uint16_t NO, NO2, SO2;
+    uint16_t O2, CO2, CO;
+};
+
 struct PACKED log_RCIN {
     LOG_PACKET_HEADER;
     uint32_t timestamp;
@@ -222,6 +230,8 @@ struct PACKED log_BARO {
       "IMU",  "Iffffff",     "TimeMS,GyrX,GyrY,GyrZ,AccX,AccY,AccZ" }, \
     { LOG_IMU2_MSG, sizeof(log_IMU), \
       "IMU2",  "Iffffff",     "TimeMS,GyrX,GyrY,GyrZ,AccX,AccY,AccZ" }, \
+	 { LOG_GAS_MSG, sizeof(log_GAS), \
+      "GAS",  "Ihhhhhh",     "TimeMS,NO,NO2,SO2,O2,CO2,CO" }, \
     { LOG_MESSAGE_MSG, sizeof(log_Message), \
       "MSG",  "Z",     "Message"}, \
     { LOG_RCIN_MSG, sizeof(log_RCIN), \
@@ -242,6 +252,7 @@ struct PACKED log_BARO {
 #define LOG_IMU2_MSG	  135
 #define LOG_BARO_MSG	  136
 
+#define LOG_GAS_MSG       137
 #include "DataFlash_Block.h"
 #include "DataFlash_File.h"
 
