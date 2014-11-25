@@ -1861,6 +1861,19 @@
                <field type="float" name="rot_z">Rotational Component in z</field>
           </message>
           <!-- MESSAGE IDs 150 - 240: Space for custom messages in individual projectname_messages.xml files -->
+          <message id="200" name="RAW_GAS">
+               <description>The RAW IMU readings for the usual 9DOF sensor setup. This message should always contain the true raw values without any scaling to allow data capture and system debugging.</description>
+               <field type="uint64_t" name="time_usec">Timestamp (microseconds since UNIX epoch or microseconds since system boot)</field>
+               <field type="int16_t" name="O2">X acceleration (raw)</field>
+               <field type="int16_t" name="CO2">Y acceleration (raw)</field>
+               <field type="int16_t" name="CO">Z acceleration (raw)</field>
+               <field type="int16_t" name="NO">Angular speed around X axis (raw)</field>
+               <field type="int16_t" name="NO2">Angular speed around Y axis (raw)</field>
+               <field type="int16_t" name="SO2">Angular speed around Z axis (raw)</field>
+               <field type="int16_t" name="H2S">X Magnetic field (raw)</field>
+               <field type="int16_t" name="HH">Y Magnetic field (raw)</field>
+               <field type="int16_t" name="LL">Z Magnetic field (raw)</field>
+          </message>
           <message id="249" name="MEMORY_VECT">
                <description>Send raw controller memory. The use of this message is discouraged for normal packets, but a quite efficient way for testing new messages and getting experimental debug output.</description>
                <field type="uint16_t" name="address">Starting address of the debug variables</field>
