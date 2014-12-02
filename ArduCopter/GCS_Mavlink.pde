@@ -518,7 +518,7 @@ static void NOINLINE send_raw_imu2(mavlink_channel_t chan)
         2,
         3,
         4,
-        6, 0, 0, 0);
+        5, 0, 0, 0);
 
 }
 
