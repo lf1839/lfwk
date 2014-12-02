@@ -501,7 +501,7 @@ static void NOINLINE send_raw_imu2(mavlink_channel_t chan)
         (int16_t)(barometer.get_temperature()*100)); // 0.01 degrees C
 
      
-    mavlink_msg_raw_gas_send(
+   /** mavlink_msg_raw_gas_send(
         chan,
         micros(),
         O2,
@@ -509,7 +509,16 @@ static void NOINLINE send_raw_imu2(mavlink_channel_t chan)
         CO.N,
         NO.N,
         NO2.N,
-        SO2.N, 0, 0, 0);
+        SO2.N, 0, 0, 0);**/
+ mavlink_msg_raw_gas_send(
+        chan,
+        micros(),
+        0,
+        1,
+        2,
+        3,
+        4,
+        6, 0, 0, 0);
 
 }
 
