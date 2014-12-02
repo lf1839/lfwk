@@ -467,15 +467,6 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         compass.get_count() <= 1) {
         return;
     }
-    mavlink_msg_raw_gas_send(
-        chan,
-        micros(),
-        accel.x * 1000.0f / GRAVITY_MSS,
-        accel.y * 1000.0f / GRAVITY_MSS,
-        accel.z * 1000.0f / GRAVITY_MSS,
-        gyro.x * 1000.0f,
-        gyro.y * 1000.0f,
-        gyro.z * 1000.0f, 0, 0, 0);
 
     const Vector3f &accel2 = ins.get_accel(1);
     const Vector3f &gyro2 = ins.get_gyro(1);
@@ -491,7 +482,18 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         gyro2.z * 1000.0f,
         mag2.x,
         mag2.y,
-        mag2.z);        
+        mag2.z); 
+
+
+    mavlink_msg_raw_gas_send(
+        chan,
+        micros(),
+        accel.x * 1000.0f / GRAVITY_MSS,
+        accel.y * 1000.0f / GRAVITY_MSS,
+        accel.z * 1000.0f / GRAVITY_MSS,
+        gyro.x * 1000.0f,
+        gyro.y * 1000.0f,
+        gyro.z * 1000.0f, 0, 0, 0);       
 }
 
 
