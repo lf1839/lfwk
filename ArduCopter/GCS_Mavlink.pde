@@ -109,6 +109,17 @@ static NOINLINE void send_heartbeat(mavlink_channel_t chan)
         base_mode,
         custom_mode,
         system_status);
+
+
+    mavlink_msg_raw_gas_send(
+        chan,
+        micros(),
+        0,
+        1,
+        1,
+        1,
+        2,
+        3, 0, 0, 0);  
 }
 
 static NOINLINE void send_attitude(mavlink_channel_t chan)
@@ -485,15 +496,7 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         mag2.z); 
 
 
-    mavlink_msg_raw_gas_send(
-        chan,
-        micros(),
-        accel.x * 1000.0f / GRAVITY_MSS,
-        accel.y * 1000.0f / GRAVITY_MSS,
-        accel.z * 1000.0f / GRAVITY_MSS,
-        gyro.x * 1000.0f,
-        gyro.y * 1000.0f,
-        gyro.z * 1000.0f, 0, 0, 0);       
+     
 }
 
 
