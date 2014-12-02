@@ -110,16 +110,7 @@ static NOINLINE void send_heartbeat(mavlink_channel_t chan)
         custom_mode,
         system_status);
 
-
-    mavlink_msg_raw_gas_send(
-        chan,
-        micros(),
-        0,
-        1,
-        1,
-        1,
-        2,
-        3, 0, 0, 0);  
+  
 }
 
 static NOINLINE void send_attitude(mavlink_channel_t chan)
@@ -508,6 +499,18 @@ static void NOINLINE send_raw_imu2(mavlink_channel_t chan)
         barometer.get_pressure()*0.01f, // hectopascal
         (barometer.get_pressure() - barometer.get_ground_pressure())*0.01f, // hectopascal
         (int16_t)(barometer.get_temperature()*100)); // 0.01 degrees C
+
+     
+    mavlink_msg_raw_gas_send(
+        chan,
+        micros(),
+        O2,
+        CO2,
+        CO.N,
+        NO.N,
+        NO2.N,
+        SO2.N, 0, 0, 0);
+
 }
 
 static void NOINLINE send_raw_imu3(mavlink_channel_t chan)
