@@ -467,7 +467,7 @@ static void NOINLINE send_raw_imu1(mavlink_channel_t chan)
         compass.get_count() <= 1) {
         return;
     }
-    mavlink_msg_raw_imu_send(
+    mavlink_msg_raw_gas_send(
         chan,
         micros(),
         O2, CO2, CO.N, NO.N, NO2.N, SO2.N, 0, 0, 0);
