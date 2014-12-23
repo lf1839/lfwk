@@ -78,16 +78,16 @@ static void read_aux_switches()
         ap.CH7_flag = switch_position;
 
         // invoke the appropriate function
-        //do_aux_switch_function(g.ch7_option, ap.CH7_flag);
+        do_aux_switch_function(g.ch7_option, ap.CH7_flag);
 
         // BN: Hack in baro override on ch7 switch
-        if (ap.CH7_flag) {
+        /**if (ap.CH7_flag) {
             gcs_send_text_P(SEVERITY_HIGH, PSTR("Faking Baro from GPS!!"));
             inertial_nav.set_fake_baro_with_gps(true);
         } else {
             gcs_send_text_P(SEVERITY_HIGH, PSTR("Using normal Baro data"));
             inertial_nav.set_fake_baro_with_gps(false);
-        }
+        }**/
     }
 
     // check if Ch8 switch has changed position

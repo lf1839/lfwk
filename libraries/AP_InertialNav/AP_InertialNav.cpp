@@ -139,7 +139,7 @@ void AP_InertialNav::check_gps()
         // call position correction method
         float dt = correct_with_gps(now, _gps->longitude, _gps->latitude);
 
-        if (_fake_baro_with_gps) {
+        if (1) {
             correct_with_baro(_gps->altitude_cm - _home_alt, dt);
         }
 
@@ -337,7 +337,7 @@ void AP_InertialNav::check_baro()
         const float dt = (float)(baro_update_time - _baro_last_update) * 0.001f; // in seconds
         // call correction method
 
-        if (!_fake_baro_with_gps) {
+        if (0) {
             correct_with_baro(_baro->get_altitude()*100, dt);
         }
 
